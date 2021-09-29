@@ -4,6 +4,9 @@
 The main purpose of the project is implementing this architecture on AWS cloud  
 ![Architecture](./documents/images/LambdaS3Sns.png)
 
+## Step One: Handle S3 Event by Lambda Function
+In this step, we need to handle the s3 event by the lambda function. In the scenario someone uploads a JSON file on S3, then a Lambda function should handle this event and read the uploaded file.
+
 ## SAM (Official Guid)
 This project contains source code and supporting files for a serverless application that you can deploy with the SAM CLI. It includes the following files and folders.
 

@@ -1,4 +1,6 @@
-# Patient Checkout (AWS Lambda, S3, and SNS)
+# Patient Checkout (AWS Lambda, S3, SNS, SQS)
+This project is created to study [Serverless using AWS Lambda for Java Developers](udemy.com/course/serverless-programming-using-aws-lambda-for-java-developers/) course on [Udemy](udemy.com). 
+I've got a [certificate of completion](https://www.udemy.com/certificate/UC-276cec6a-0314-4c55-87e4-5e0c3eef920b/) for this course also.
 
 ## Brief Description
 The main purpose of the project is implementing this architecture on AWS cloud  

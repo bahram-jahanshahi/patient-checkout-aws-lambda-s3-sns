@@ -15,7 +15,10 @@ Then we need a listener lambda function to handle the SNS event.
 In this step, we need to apply Log4j for logging the lambda functions.
 
 ## Step 4: Create Error Handler Lambda
-In this step, we need an Error Handler Lambda Function which handle an error by Dead Letter Queue (DLQ).
+In this step, we need an Error Handler Lambda Function which handle an error by Dead Letter Queue (DLQ).  
+The scenario is when an error is thrown then a lambda function should throw a runtime exception. 
+then in template.yaml is needed to add DeadLetterQueue Config to that lambda function. 
+Then someone should listen to the DeadLetterQueue and handle the exception in an async mode.  
 
 
 ## SAM (Official Guid)

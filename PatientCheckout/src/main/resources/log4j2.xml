@@ -1,0 +1,16 @@
+<configuration status="WARN">
+    <Appenders>
+        <Lambda name="Lambda">
+            <PatternLayout>
+                <pattern>%{yyyy-MM-dd HH:mm:ss %X{AWSRequestId} %-5p %c{1} -%m%n</pattern>
+            </PatternLayout>
+        </Lambda>
+    </Appenders>
+    <Loggers>
+        <Root level="INFO">
+            <AppenderRef ref="INFO"/>
+        </Root>
+        <Logger name="software.amazon.awssdk" level="WARN"/>
+        <Logger name="software.amazon.awssdk.request" level="DEBUG"/>
+    </Loggers>
+</configuration>

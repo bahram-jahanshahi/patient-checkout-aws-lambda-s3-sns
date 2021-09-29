@@ -51,6 +51,7 @@ public class PatientCheckoutLambda {
                 e.printStackTrace(new PrintWriter(stringWriter));
                 logger.log(stringWriter.toString());*/
                 logger.error("Error is:", e);
+                throw new RuntimeException("Error while processing S3 event", e);
             }
         });
     }

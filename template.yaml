@@ -11,6 +11,9 @@ Globals:
     Timeout: 20
 
 Resources:
+  # Dead Letter Queue
+  PatientCheckoutDLQ:
+    Type: AWS::SNS::Topic
   # S3
   PatientCheckoutBucket:
     Type: AWS::S3::Bucket
@@ -21,18 +24,22 @@ Resources:
     Type: AWS::SNS::Topic
   # Lambda Functions
   PatientCheckoutFunction:
-    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Type: AWS::Serverless::Function
     Properties:
       CodeUri: PatientCheckout
       Handler: se.bahram.aws.lambda.s3.sns.PatientCheckoutLambda::handler
       Runtime: java11
       MemorySize: 512
+      # Configure Dead Letter Queue for this lambda
+      DeadLetterQueue:
+        Type: SNS
+        TargetArn: !Ref PatientCheckoutDLQ
       Policies:
         - S3ReadPolicy:
             BucketName: !Sub ${AWS::StackName}-${AWS::AccountId}-${AWS::Region}
         - SNSPublishMessagePolicy:
             TopicName: !GetAtt PatientCheckoutTopic.TopicName
-      Environment: # More info about Env Vars: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#environment-object
+      Environment:
         Variables:
           PATIENT_CHECKOUT_TOPIC: !Ref PatientCheckoutTopic
       Events:
@@ -43,7 +50,7 @@ Resources:
             Events: s3:ObjectCreated:*
 
   BillManagementFunction:
-    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Type: AWS::Serverless::Function
     Properties:
       CodeUri: PatientCheckout
       Handler: se.bahram.aws.lambda.s3.sns.BuildManagementLambda::handler
@@ -54,4 +61,17 @@ Resources:
           Type: SNS
           Properties:
             Topic: !Ref PatientCheckoutTopic
+
+  ErrorHandlingFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: PatientCheckout
+      Handler: se.bahram.aws.lambda.s3.sns.error_handling.ErrorHandler::handler
+      Runtime: java11
+      MemorySize: 512
+      Events:
+        SNSEvent:
+          Type: SNS
+          Properties:
+            Topic: !Ref PatientCheckoutDLQ
 

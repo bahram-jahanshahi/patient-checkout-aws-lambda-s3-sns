@@ -4,15 +4,18 @@
 The main purpose of the project is implementing this architecture on AWS cloud  
 ![Architecture](./documents/images/LambdaS3Sns.png)
 
-## Step One: Handle S3 Event by Lambda Function
+## Step 1: Handle S3 Event by Lambda Function
 In this step, we need to handle the s3 event by the lambda function. In the scenario someone uploads a JSON file on S3, then a Lambda function should handle this event and read the uploaded file.
 
-## Step Two: Configure SNS Topic and Publish Messages
+## Step 2: Configure SNS Topic and Publish Messages
 In this step, we need to send a message to SNS after the s3 event is handled. 
 Then we need a listener lambda function to handle the SNS event. 
 
-## Step Three: Apply Log4j to Lambda Function
+## Step 3: Apply Log4j to Lambda Function
 In this step, we need to apply Log4j for logging the lambda functions.
+
+## Step 4: Create Error Handler Lambda
+In this step, we need an Error Handler Lambda Function which handle an error by Dead Letter Queue (DLQ).
 
 
 ## SAM (Official Guid)
